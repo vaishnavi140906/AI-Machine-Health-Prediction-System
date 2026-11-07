@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Machine Predictor</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(
+                135deg,
+                #07111f,
+                #102a43,
+                #0b1728
+            );
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+
+        /* NAVIGATION */
+
+        nav {
+            width: 100%;
+            padding: 18px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: rgba(5, 15, 28, 0.92);
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+            position: sticky;
+            top: 0;
+
+            z-index: 1000;
+
+            backdrop-filter: blur(10px);
+        }
+
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: #55d6ff;
+        }
+
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+
+        .nav-links a {
+            text-decoration: none;
+            color: #d8e8f5;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+
+        .nav-links a:hover {
+            color: #55d6ff;
+        }
+
+
+        /* MAIN */
+
+        .main-content {
+            width: 100%;
+        }
+
+
+        section {
+            padding: 80px 7%;
+        }
+
+
+        /* HERO */
+
+        .hero {
+            min-height: 88vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+        }
+
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+
+        .badge {
+            display: inline-block;
+
+            padding: 9px 18px;
+
+            border-radius: 30px;
+
+            background: rgba(85, 214, 255, 0.1);
+
+            border: 1px solid rgba(85, 214, 255, 0.4);
+
+            color: #55d6ff;
+
+            font-size: 13px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .hero h1 {
+            font-size: clamp(40px, 7vw, 75px);
+
+            line-height: 1.05;
+
+            margin-bottom: 20px;
+        }
+
+
+        .hero h1 span {
+            color: #55d6ff;
+        }
+
+
+        .hero p {
+            color: #b8cad8;
+
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            margin-bottom: 35px;
+        }
+
+
+        .hero-buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .btn {
+            padding: 14px 25px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            transition: 0.3s;
+
+            display: inline-block;
+        }
+
+
+        .btn-primary {
+            background: #55d6ff;
+
+            color: #06111d;
+        }
+
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 30px
+                rgba(85, 214, 255, 0.25);
+        }
+
+
+        .btn-secondary {
+            border: 1px solid #40566a;
+
+            color: #ffffff;
+        }
+
+
+        .btn-secondary:hover {
+            border-color: #55d6ff;
+
+            color: #55d6ff;
+        }
+
+
+        /* SECTION TITLE */
+
+        .section-title {
+            text-align: center;
+
+            margin-bottom: 45px;
+        }
+
+
+        .section-title h2 {
+            font-size: 38px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .section-title p {
+            color: #9fb4c5;
+        }
+
+        /* PREDICTOR CARD */
+
+        .predictor-card {
+            max-width: 1100px;
+            margin: auto;
+            padding: 35px;
+
+            border-radius: 25px;
+
+            background: rgba(255, 255, 255, 0.06);
+
+            border: 1px solid rgba(255, 255, 255, 0.1);
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.25);
+        }
+
+
+        /* INPUT GRID */
+
+        .input-grid {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 22px;
+        }
+
+
+        /* INPUT GROUP */
+
+        .input-group {
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .input-group label {
+            margin-bottom: 9px;
+
+            color: #dceaf4;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+
+        .input-group input {
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border-radius: 10px;
+
+            border: 1px solid #32495c;
+
+            background: rgba(4, 14, 26, 0.8);
+
+            color: #ffffff;
+
+            outline: none;
+
+            font-size: 15px;
+        }
+
+
+        .input-group input:focus {
+            border-color: #55d6ff;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(85, 214, 255, 0.08);
+        }
+
+
+        /* PREDICT BUTTON */
+
+        .predict-button {
+            width: 100%;
+
+            margin-top: 28px;
+
+            padding: 16px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #55d6ff,
+                    #49a7ff
+                );
+
+            color: #06111d;
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+
+        .predict-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 30px
+                rgba(85, 214, 255, 0.2);
+        }
+
+
+        /* RESULTS */
+
+        .results {
+            margin-top: 35px;
+        }
+
+
+        .results-title {
+            text-align: center;
+
+            font-size: 25px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .result-grid {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .result-card {
+            padding: 25px;
+
+            border-radius: 18px;
+
+            background:
+                rgba(255, 255, 255, 0.05);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.09);
+
+            text-align: center;
+        }
+
+
+        .result-icon {
+            font-size: 30px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .result-card h3 {
+            color: #9fb4c5;
+
+            font-size: 14px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .result-value {
+            font-size: 30px;
+
+            font-weight: 800;
+        }
+
+
+        /* RECOMMENDATION */
+
+        .recommendation {
+            margin-top: 20px;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(85, 214, 255, 0.08);
+
+            border:
+                1px solid
+                rgba(85, 214, 255, 0.2);
+        }
+
+
+        .recommendation h3 {
+            margin-bottom: 8px;
+
+            color: #55d6ff;
+        }
+
+
+        .recommendation p {
+            color: #d7e4ed;
+
+            line-height: 1.6;
+        }
+
+
+        /* FEATURES */
+
+        .feature-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            max-width: 1100px;
+
+            margin: auto;
+        }
+
+
+        .feature-card {
+            padding: 28px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255, 255, 255, 0.05);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.09);
+
+            transition: 0.3s;
+        }
+
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+
+            border-color:
+                rgba(85, 214, 255, 0.35);
+        }
+
+
+        .feature-card .icon {
+            font-size: 35px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .feature-card h3 {
+            margin-bottom: 10px;
+        }
+
+
+        .feature-card p {
+            color: #9fb4c5;
+
+            line-height: 1.6;
+
+            font-size: 14px;
+        }
+
+
+        /* ABOUT */
+
+        .about-card {
+            max-width: 1000px;
+
+            margin: auto;
+
+            padding: 40px;
+
+            border-radius: 25px;
+
+            background:
+                rgba(255, 255, 255, 0.05);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.09);
+        }
+
+
+        .about-card h2 {
+            font-size: 32px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .about-card p {
+            color: #b8cad8;
+
+            line-height: 1.8;
+
+            margin-bottom: 25px;
+        }
+
+
+        .technology-list {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 12px;
+        }
+
+
+        .technology-list span {
+            padding: 10px 16px;
+
+            border-radius: 30px;
+
+            background:
+                rgba(85, 214, 255, 0.08);
+
+            border:
+                1px solid
+                rgba(85, 214, 255, 0.18);
+
+            color: #dceaf4;
+
+            font-size: 14px;
+        }
+
+
+        /* FOOTER */
+
+        footer {
+            padding: 30px 7%;
+
+            text-align: center;
+
+            color: #7890a2;
+
+            border-top:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            font-size: 13px;
+        }
+
+        /* AUTOMATIC MAINTENANCE ALERT */
+
+.alert-box {
+    margin-top: 20px;
+    padding: 22px;
+    border-radius: 15px;
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, 0.05);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.1);
+}
+
+
+.alert-box.normal {
+    border-color:
+        rgba(60, 220, 140, 0.5);
+
+    background:
+        rgba(60, 220, 140, 0.08);
+}
+
+
+.alert-box.warning {
+    border-color:
+        rgba(255, 190, 60, 0.5);
+
+    background:
+        rgba(255, 190, 60, 0.08);
+}
+
+
+.alert-box.urgent {
+    border-color:
+        rgba(255, 80, 80, 0.5);
+
+    background:
+        rgba(255, 80, 80, 0.08);
+}
+
+
+.alert-box h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+
+.alert-box p {
+    color: #d7e4ed;
+    line-height: 1.6;
+}
+
+
+/* MACHINE DASHBOARD */
+
+.machine-dashboard {
+
+    margin-top: 20px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 12px;
+}
+
+
+.dashboard-item {
+
+    padding: 18px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255, 255, 255, 0.05);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.09);
+
+    text-align: center;
+}
+
+
+.dashboard-item span {
+
+    display: block;
+
+    color: #9fb4c5;
+
+    font-size: 12px;
+
+    margin-bottom: 8px;
+}
+
+
+.dashboard-item strong {
+
+    font-size: 15px;
+
+    color: #ffffff;
+
+}
+
+
+/* DASHBOARD RESPONSIVE */
+
+@media (max-width: 1000px) {
+
+    .machine-dashboard {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+}
+
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .nav-links {
+                display: none;
+            }
+
+
+            section {
+                padding: 60px 5%;
+            }
+
+
+            .predictor-card {
+                padding: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+
+    <nav>
+
+        <div class="logo">
+            🤖 AI Machine Predictor
+        </div>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="#home">Home</a>
+            </li>
+
+            <li>
+                <a href="#predict">Predict</a>
+            </li>
+
+            <li>
+                <a href="#history">History</a>
+            </li>
+
+            <li>
+                <a href="#features">Features</a>
+            </li>
+
+            <li>
+                <a href="#about">About</a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+
+        <!-- HOME SECTION -->
+
+        <section id="home" class="hero">
+
+            <div class="hero-content">
+
+
+                <div class="badge">
+                    ⚡ AI-Powered Predictive Maintenance
+                </div>
+
+
+                <h1>
+
+                    Predict Machine
+                    <span>
+                        Failure Before It Happens
+                    </span>
+
+                </h1>
+
+
+                <p>
+
+                    An intelligent machine health monitoring
+                    system that analyzes industrial sensor
+                    parameters and predicts the probability
+                    of machine failure using deep learning.
+
+                </p>
+
+
+                <div class="hero-buttons">
+
+
+                    <a
+                        href="#predict"
+                        class="btn btn-primary"
+                    >
+
+                        🚀 Start Prediction
+
+                    </a>
+
+
+                    <a
+                        href="#about"
+                        class="btn btn-secondary"
+                    >
+
+                        Learn More
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- PREDICTION SECTION -->
+
+        <section id="predict">
+
+
+            <div class="section-title">
+
+                <h2>
+                    🔧 Machine Health Prediction
+                </h2>
+
+                <p>
+                    Enter the current machine sensor readings
+                </p>
+
+            </div>
+
+
+            <div class="predictor-card">
+
+
+                <form
+                    action="/predict"
+                    method="POST"
+                >
+
+                <!-- MACHINE INFORMATION -->
+
+<div class="input-grid">
+
+    <div class="input-group">
+
+        <label for="machine_name">
+            🏭 Machine Name
+        </label>
+
+        <input
+            type="text"
+            id="machine_name"
+            name="machine_name"
+            placeholder="Example: CNC Milling Machine"
+            required
+        >
+
+    </div>
+
+
+    <div class="input-group">
+
+        <label for="machine_id">
+            🆔 Machine ID
+        </label>
+
+        <input
+            type="text"
+            id="machine_id"
+            name="machine_id"
+            placeholder="Example: CNC-001"
+            required
+        >
+
+    </div>
+
+</div>
+
+
+                    <div class="input-grid">
+
+
+                        <!-- AIR TEMPERATURE -->
+
+                        <div class="input-group">
+
+                            <label for="air_temperature">
+
+                                🌡️ Air Temperature (K)
+
+                            </label>
+
+
+                            <input
+                                type="number"
+                                step="any"
+                                id="air_temperature"
+                                name="air_temperature"
+                                placeholder="Example: 298.5"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- PROCESS TEMPERATURE -->
+
+                        <div class="input-group">
+
+                            <label for="process_temperature">
+
+                                🔥 Process Temperature (K)
+
+                            </label>
+
+
+                            <input
+                                type="number"
+                                step="any"
+                                id="process_temperature"
+                                name="process_temperature"
+                                placeholder="Example: 308.6"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- ROTATIONAL SPEED -->
+
+                        <div class="input-group">
+
+                            <label for="rpm">
+
+                                ⚙️ Rotational Speed (RPM)
+
+                            </label>
+
+
+                            <input
+                                type="number"
+                                step="any"
+                                id="rpm"
+                                name="rpm"
+                                placeholder="Example: 1500"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- TORQUE -->
+
+                        <div class="input-group">
+
+                            <label for="torque">
+
+                                🔩 Torque (Nm)
+
+                            </label>
+
+
+                            <input
+                                type="number"
+                                step="any"
+                                id="torque"
+                                name="torque"
+                                placeholder="Example: 40"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- TOOL WEAR -->
+
+                        <div class="input-group">
+
+                            <label for="tool_wear">
+
+                                🛠️ Tool Wear (min)
+
+                            </label>
+
+
+                            <input
+                                type="number"
+                                step="any"
+                                id="tool_wear"
+                                name="tool_wear"
+                                placeholder="Example: 100"
+                                required
+                            >
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- PREDICT BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="predict-button"
+                    >
+
+                        🔮 Predict Machine Health
+
+                    </button>
+
+
+                </form>
+
+                <!-- PREDICTION RESULTS -->
+
+                {% if prediction is defined %}
+
+                <div class="results">
+
+                    <h2 class="results-title">
+                        📊 AI Prediction Result
+                    </h2>
+
+
+                    <div class="result-grid">
+
+
+                        <!-- MACHINE HEALTH -->
+
+                        <div class="result-card">
+
+                            <div class="result-icon">
+                                ❤️
+                            </div>
+
+                            <h3>
+                                Machine Health
+                            </h3>
+
+                            <div class="result-value">
+                                {{ health }}%
+                            </div>
+
+                        </div>
+
+
+                        <!-- FAILURE RISK -->
+
+                        <div class="result-card">
+
+                            <div class="result-icon">
+                                ⚠️
+                            </div>
+
+                            <h3>
+                                Failure Risk
+                            </h3>
+
+                            <div class="result-value">
+                                {{ risk }}%
+                            </div>
+
+                        </div>
+
+
+                        <!-- RISK LEVEL -->
+
+                        <div class="result-card">
+
+                            <div class="result-icon">
+                                🚦
+                            </div>
+
+                            <h3>
+                                Risk Level
+                            </h3>
+
+                            <div class="result-value">
+                                {{ prediction_result }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MAINTENANCE RECOMMENDATION -->
+
+                    <div class="recommendation">
+
+                        <h3>
+                            🛠️ Maintenance Recommendation
+                        </h3>
+
+                        <p>
+                            {{ recommendation }}
+                        </p>
+
+                    </div>
+
+
+                    <!-- DECISION THRESHOLD -->
+
+                    {% if threshold is defined %}
+
+                    <div class="recommendation">
+
+                        <h3>
+                            🎯 Decision Threshold
+                        </h3>
+
+                        <p>
+                            {{ threshold }}%
+                        </p>
+
+                    </div>
+
+                    {% endif %}
+
+                    <!-- AUTOMATIC MAINTENANCE ALERT -->
+
+{% if alert_status is defined %}
+
+<div class="alert-box
+{% if alert_status == 'NORMAL' %}
+normal
+{% elif alert_status == 'WARNING' %}
+warning
+{% else %}
+urgent
+{% endif %}
+">
+
+    <h3>
+
+        {% if alert_status == "NORMAL" %}
+
+            🟢 Maintenance Status: NORMAL
+
+        {% elif alert_status == "WARNING" %}
+
+            🟡 Maintenance Status: WARNING
+
+        {% else %}
+
+            🔴 Maintenance Status: URGENT
+
+        {% endif %}
+
+    </h3>
+
+
+    <p>
+        {{ alert_message }}
+    </p>
+
+</div>
+
+{% endif %}
+
+
+<!-- MACHINE DASHBOARD -->
+
+{% if machine_name is defined %}
+
+<div class="machine-dashboard">
+
+
+    <!-- MACHINE NAME -->
+
+    <div class="dashboard-item">
+
+        <span>
+            🏭 Machine Name
+        </span>
+
+        <strong>
+            {{ machine_name }}
+        </strong>
+
+    </div>
+
+
+    <!-- MACHINE ID -->
+
+    <div class="dashboard-item">
+
+        <span>
+            🆔 Machine ID
+        </span>
+
+        <strong>
+            {{ machine_id }}
+        </strong>
+
+    </div>
+
+
+    <!-- AIR TEMPERATURE -->
+
+    <div class="dashboard-item">
+
+        <span>
+            🌡️ Air Temperature
+        </span>
+
+        <strong>
+            {{ air_temperature }} K
+        </strong>
+
+    </div>
+
+
+    <!-- RPM -->
+
+    <div class="dashboard-item">
+
+        <span>
+            ⚙️ Rotational Speed
+        </span>
+
+        <strong>
+            {{ rpm }} RPM
+        </strong>
+
+    </div>
+
+
+    <!-- TORQUE -->
+
+    <div class="dashboard-item">
+
+        <span>
+            🔩 Torque
+        </span>
+
+        <strong>
+            {{ torque }} Nm
+        </strong>
+
+    </div>
+
+    <!-- PROCESS TEMPERATURE -->
+
+<div class="dashboard-item">
+
+    <span>
+        🔥 Process Temperature
+    </span>
+
+    <strong>
+        {{ process_temperature }} K
+    </strong>
+
+</div>
+
+
+<!-- TOOL WEAR -->
+
+<div class="dashboard-item">
+
+    <span>
+        🛠️ Tool Wear
+    </span>
+
+    <strong>
+        {{ tool_wear }} min
+    </strong>
+
+</div>
+
+
+</div>
+
+{% endif %}
+
+
+                </div>
+
+                {% endif %}
+
+
+            </div>
+
+        </section>
+
+        <!-- ================================================= -->
+        <!-- PREDICTION HISTORY -->
+        <!-- ================================================= -->
+
+        <section id="history">
+
+            <div class="section-title">
+
+                <h2>
+                    📜 Prediction History
+                </h2>
+
+                <p>
+                    View previous machine health predictions
+                </p>
+
+            </div>
+
+
+            <div class="predictor-card">
+
+                {% if history and history|length > 0 %}
+
+                <div style="overflow-x: auto;">
+
+                    <table style="
+                        width: 100%;
+                        border-collapse: collapse;
+                        min-width: 900px;
+                    ">
+
+                        <thead>
+
+                            <tr style="
+                                background: rgba(85, 214, 255, 0.12);
+                            ">
+
+                                <th style="
+                                    padding: 15px;
+                                    text-align: left;
+                                ">
+                                    📅 Date
+                                </th>
+
+                                <th style="
+                                    padding: 15px;
+                                    text-align: left;
+                                ">
+                                    🏭 Machine
+                                </th>
+
+                                <th style="
+                                    padding: 15px;
+                                    text-align: left;
+                                ">
+                                    🆔 Machine ID
+                                </th>
+
+                                <th style="
+                                    padding: 15px;
+                                    text-align: center;
+                                ">
+                                    ❤️ Health
+                                </th>
+
+                                <th style="
+                                    padding: 15px;
+                                    text-align: center;
+                                ">
+                                    ⚠️ Failure Risk
+                                </th>
+
+                                <th style="
+                                    padding: 15px;
+                                    text-align: center;
+                                ">
+                                    🚦 Risk Level
+                                </th>
+
+                                <th style="
+                                    padding: 15px;
+                                    text-align: center;
+                                ">
+                                    🔮 Prediction
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            {% for record in history|reverse %}
+
+                            <tr style="
+                                border-bottom:
+                                1px solid
+                                rgba(255,255,255,0.08);
+                            ">
+
+
+                                <!-- DATE -->
+
+                                <td style="
+                                    padding: 15px;
+                                    color: #b8cad8;
+                                ">
+
+                                    {{ record.date }}
+
+                                </td>
+
+
+                                <!-- MACHINE NAME -->
+
+                                <td style="
+                                    padding: 15px;
+                                    font-weight: 700;
+                                ">
+
+                                    🏭
+                                    {{ record.machine_name }}
+
+                                </td>
+
+
+                                <!-- MACHINE ID -->
+
+                                <td style="
+                                    padding: 15px;
+                                    color: #55d6ff;
+                                    font-weight: 600;
+                                ">
+
+                                    {{ record.machine_id }}
+
+                                </td>
+
+
+                                <!-- HEALTH -->
+
+                                <td style="
+                                    padding: 15px;
+                                    text-align: center;
+                                ">
+
+                                    {{ record.machine_health }}%
+
+                                </td>
+
+
+                                <!-- FAILURE RISK -->
+
+                                <td style="
+                                    padding: 15px;
+                                    text-align: center;
+                                ">
+
+                                    {{ record.failure_risk }}%
+
+                                </td>
+
+
+                                <!-- RISK LEVEL -->
+
+                                <td style="
+                                    padding: 15px;
+                                    text-align: center;
+                                    font-weight: 700;
+                                ">
+
+                                    {{ record.risk_level }}
+
+                                </td>
+
+
+                                <!-- PREDICTION -->
+
+                                <td style="
+                                    padding: 15px;
+                                    text-align: center;
+                                    font-weight: 700;
+                                ">
+
+                                    {{ record.prediction }}
+
+                                </td>
+
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                {% else %}
+
+                <div style="
+                    text-align: center;
+                    padding: 40px;
+                    color: #9fb4c5;
+                ">
+
+                    <div style="
+                        font-size: 45px;
+                        margin-bottom: 15px;
+                    ">
+                        📭
+                    </div>
+
+                    <h3>
+                        No Prediction History Yet
+                    </h3>
+
+                    <p style="
+                        margin-top: 10px;
+                        color: #9fb4c5;
+                    ">
+
+                        Make your first machine prediction
+                        to see it here.
+
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+        <!-- FEATURES SECTION -->
+
+        <section id="features">
+
+            <div class="section-title">
+
+                <h2>
+                    🚀 Key Features
+                </h2>
+
+                <p>
+                    Intelligent predictive maintenance for modern industries
+                </p>
+
+            </div>
+
+
+            <div class="feature-grid">
+
+
+                <!-- FEATURE 1 -->
+
+                <div class="feature-card">
+
+                    <div class="icon">
+                        🤖
+                    </div>
+
+                    <h3>
+                        AI Failure Prediction
+                    </h3>
+
+                    <p>
+                        Uses a deep learning model to estimate
+                        the probability of machine failure.
+                    </p>
+
+                </div>
+
+
+                <!-- FEATURE 2 -->
+
+                <div class="feature-card">
+
+                    <div class="icon">
+                        ❤️
+                    </div>
+
+                    <h3>
+                        Machine Health Score
+                    </h3>
+
+                    <p>
+                        Converts the predicted failure probability
+                        into an easy-to-understand health score.
+                    </p>
+
+                </div>
+
+
+                <!-- FEATURE 3 -->
+
+                <div class="feature-card">
+
+                    <div class="icon">
+                        ⚠️
+                    </div>
+
+                    <h3>
+                        Early Warning
+                    </h3>
+
+                    <p>
+                        Identifies machines with elevated failure
+                        risk so maintenance can be planned earlier.
+                    </p>
+
+                </div>
+
+
+                <!-- FEATURE 4 -->
+
+                <div class="feature-card">
+
+                    <div class="icon">
+                        📊
+                    </div>
+
+                    <h3>
+                        Sensor Analytics
+                    </h3>
+
+                    <p>
+                        Analyzes temperature, rotational speed,
+                        torque and tool wear parameters.
+                    </p>
+
+                </div>
+
+
+                <!-- FEATURE 5 -->
+
+                <div class="feature-card">
+
+                    <div class="icon">
+                        🧠
+                    </div>
+
+                    <h3>
+                        Deep Learning
+                    </h3>
+
+                    <p>
+                        Uses an LSTM-based neural network to learn
+                        patterns from machine sensor data.
+                    </p>
+
+                </div>
+
+
+                <!-- FEATURE 6 -->
+
+                <div class="feature-card">
+
+                    <div class="icon">
+                        🔧
+                    </div>
+
+                    <h3>
+                        Maintenance Support
+                    </h3>
+
+                    <p>
+                        Provides a maintenance recommendation based
+                        on the predicted machine condition.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT SECTION -->
+
+        <section id="about">
+
+
+            <div class="section-title">
+
+                <h2>
+                    💡 About The System
+                </h2>
+
+                <p>
+                    AI-powered predictive maintenance for industrial machines
+                </p>
+
+            </div>
+
+
+            <div class="about-card">
+
+
+                <h2>
+                    🏭 AI-Based Predictive Machine Maintenance
+                </h2>
+
+
+                <p>
+                    This project is designed to help manufacturing
+                    industries monitor machine health and identify
+                    possible failures before they occur.
+                </p>
+
+
+                <p>
+                    The system receives machine sensor parameters
+                    such as air temperature, process temperature,
+                    rotational speed, torque and tool wear.
+                    These values are processed using a trained
+                    deep learning model to estimate the probability
+                    of machine failure.
+                </p>
+
+
+                <p>
+                    The predicted probability is converted into a
+                    machine health score and risk level, helping
+                    maintenance teams make faster and more informed
+                    decisions.
+                </p>
+
+
+                <div class="technology-list">
+
+
+                    <span>
+                        🐍 Python
+                    </span>
+
+
+                    <span>
+                        🧠 TensorFlow
+                    </span>
+
+
+                    <span>
+                        🔥 LSTM
+                    </span>
+
+
+                    <span>
+                        🌐 Flask
+                    </span>
+
+
+                    <span>
+                        📊 StandardScaler
+                    </span>
+
+
+                    <span>
+                        🤖 Deep Learning
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            © 2026 AI Machine Predictor |
+            Predictive Maintenance System
+        </p>
+
+    </footer>
+
+
+</body>
+
+</html>
